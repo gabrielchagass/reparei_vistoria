@@ -1,15 +1,24 @@
 <?php
 session_start();
+$docRoot = isset($_SERVER['DOCUMENT_ROOT']) ? rtrim($_SERVER['DOCUMENT_ROOT'], '/\\') : null;
+$envVendor = getenv('COMPOSER_VENDOR_DIR');
+
 $tries = [
+    // Typical layout: repo/vendor beside public/
     __DIR__ . '/../vendor/autoload.php',
+    // One level up (if public/ inside another folder)
     __DIR__ . '/../../vendor/autoload.php',
     __DIR__ . '/../../../vendor/autoload.php',
-    __DIR__ . '/../../../../vendor/autoload.php',
+    // Fallback using document root (hosting sometimes rewrites cwd)
+    $docRoot ? $docRoot . '/../vendor/autoload.php' : null,
+    $docRoot ? $docRoot . '/vendor/autoload.php' : null,
+    // Custom vendor dir via env
+    $envVendor ? $envVendor . '/autoload.php' : null,
 ];
 
 $autoload = null;
 foreach ($tries as $p) {
-    if (is_readable($p)) { $autoload = $p; break; }
+    if ($p && is_readable($p)) { $autoload = $p; break; }
 }
 
 if (!$autoload) {

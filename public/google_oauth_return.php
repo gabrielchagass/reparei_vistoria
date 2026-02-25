@@ -20,16 +20,21 @@ foreach ($_GET as $key => $value) {
     }
 }
 
+$docRoot = isset($_SERVER['DOCUMENT_ROOT']) ? rtrim($_SERVER['DOCUMENT_ROOT'], '/\\') : null;
+$envVendor = getenv('COMPOSER_VENDOR_DIR');
+
 $tries = [
     __DIR__ . '/../vendor/autoload.php',
     __DIR__ . '/../../vendor/autoload.php',
     __DIR__ . '/../../../vendor/autoload.php',
-    __DIR__ . '/../../../../vendor/autoload.php',
+    $docRoot ? $docRoot . '/../vendor/autoload.php' : null,
+    $docRoot ? $docRoot . '/vendor/autoload.php' : null,
+    $envVendor ? $envVendor . '/autoload.php' : null,
 ];
 
 $autoload = null;
 foreach ($tries as $p) {
-    if (is_readable($p)) { $autoload = $p; break; }
+    if ($p && is_readable($p)) { $autoload = $p; break; }
 }
 
 if (!$autoload) {
