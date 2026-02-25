@@ -30,5 +30,8 @@ if ($conn->query($create_db_sql) === FALSE) {
 // Seleciona o banco de dados
 $conn->select_db($dbname);
 
+// Garante charset correto para evitar caracteres corrompidos
+$conn->set_charset('utf8mb4');
+
 // Restante do código...
 ?>
