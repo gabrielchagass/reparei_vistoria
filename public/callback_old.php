@@ -30,7 +30,14 @@ require_once $autoload;
 // Configurações do Google (use variáveis de ambiente; nunca commit secrets)
 $clientID = getenv('GOOGLE_CLIENT_ID');
 $clientSecret = getenv('GOOGLE_CLIENT_SECRET');
-$redirectURI = getenv('GOOGLE_REDIRECT_URI') ?: 'https://vistoria.reparei.com.br/callback.php';
+
+$scheme = (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']))
+    ? $_SERVER['HTTP_X_FORWARDED_PROTO']
+    : ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http');
+$host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+$dynamicRedirect = $scheme . '://' . $host . '/callback.php';
+
+$redirectURI = getenv('GOOGLE_REDIRECT_URI') ?: $dynamicRedirect;
 
 if (!$clientID || !$clientSecret) {
     http_response_code(500);

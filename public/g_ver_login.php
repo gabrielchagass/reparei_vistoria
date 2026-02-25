@@ -35,7 +35,15 @@ require_once $autoload;
 // Configurações do Google Client (via variáveis de ambiente)
 $clientID = getenv('GOOGLE_CLIENT_ID');
 $clientSecret = getenv('GOOGLE_CLIENT_SECRET');
-$redirectURI = getenv('GOOGLE_REDIRECT_URI') ?: 'https://vistoria.reparei.com.br/google_oauth_return.php';
+
+// Detect host to avoid redirect_uri mismatch across environments
+$scheme = (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']))
+    ? $_SERVER['HTTP_X_FORWARDED_PROTO']
+    : ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http');
+$host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+$dynamicRedirect = $scheme . '://' . $host . '/google_oauth_return.php';
+
+$redirectURI = getenv('GOOGLE_REDIRECT_URI') ?: $dynamicRedirect;
 
 if (!$clientID || !$clientSecret) {
     http_response_code(500);
