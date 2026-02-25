@@ -1,6 +1,23 @@
 <?php
-require_once '../../vendor/autoload.php';
 session_start();
+
+$tries = [
+    __DIR__ . '/../vendor/autoload.php',
+    __DIR__ . '/../../vendor/autoload.php',
+    __DIR__ . '/../../../vendor/autoload.php',
+];
+
+$autoload = null;
+foreach ($tries as $p) {
+    if (is_readable($p)) { $autoload = $p; break; }
+}
+
+if (!$autoload) {
+    http_response_code(500);
+    exit('Autoload ausente. Ajuste caminhos em callback_old.php.');
+}
+
+require_once $autoload;
 // Configurações do Google (use variáveis de ambiente; nunca commit secrets)
 $clientID = getenv('GOOGLE_CLIENT_ID');
 $clientSecret = getenv('GOOGLE_CLIENT_SECRET');

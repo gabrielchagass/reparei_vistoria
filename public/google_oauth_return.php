@@ -21,6 +21,7 @@ foreach ($_GET as $key => $value) {
 }
 
 $tries = [
+    __DIR__ . '/../vendor/autoload.php',
     __DIR__ . '/../../vendor/autoload.php',
     __DIR__ . '/../../../vendor/autoload.php',
     __DIR__ . '/../../../../vendor/autoload.php',

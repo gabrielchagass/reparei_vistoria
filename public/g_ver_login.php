@@ -1,6 +1,7 @@
 <?php
 session_start();
 $tries = [
+    __DIR__ . '/../vendor/autoload.php',
     __DIR__ . '/../../vendor/autoload.php',
     __DIR__ . '/../../../vendor/autoload.php',
     __DIR__ . '/../../../../vendor/autoload.php',
