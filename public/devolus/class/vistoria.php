@@ -1,0 +1,59 @@
+<?php
+class vistoria{
+    private $cod;
+    private $id_agendamento;
+    private $id_vistoria;
+
+    public function __construct($cod, $id_agendamento, $id_vistoria) {
+        $this->cod = $cod;
+        $this->id_agendamento = $id_agendamento;
+        $this->id_vistoria = $id_vistoria;
+    }
+
+    public function concluir($data) {
+        include_once('con_v.php');
+
+
+        // Consulta SQL para selecionar os registros da tabela "agendamentos" com data_fim nulo
+        $sql = "SELECT * FROM agendamentos WHERE devolus_agendamento_id = ".$this->id_agendamento." AND status_id < 4 AND data_fim IS NULL ORDER BY id DESC LIMIT 1";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            //encontrado
+            while ($row = $result->fetch_assoc()) {
+                $AgendamentoId=$row['id'];
+                $DevolusAgendamentoId=$row['devolus_agendamento_id'];
+                
+                //libera vistoriador
+                $sqlx = "UPDATE cargos SET agendamento_id = null WHERE agendamento_id = $AgendamentoId";
+                $conn->query($sqlx);
+            }
+            
+
+            // Preparar o comando SQL
+            $sql = "UPDATE agendamentos SET status_id = 4, devolus_vistoria_id = ".$this->id_vistoria.", data_fim = '$data' WHERE id = $AgendamentoId";
+            // Executar o comando SQL
+            if ($conn->query($sql) === TRUE) {
+                //echo "Atualização realizada com sucesso!";
+                return $AgendamentoId;
+            } else {
+                //echo "Erro na atualização: " . $conexao->error;
+                return false;
+            }
+
+        }else{
+            //nada encontrado
+            return true;
+        }
+
+
+
+
+
+        // Lógica para concluir a vistoria com base no código ($this->cod)
+        // ...
+        // Retorne o resultado da conclusão da vistoria
+        //return "Vistoria concluída com sucesso para o código {$this->cod}";
+    }
+}
+
+?>

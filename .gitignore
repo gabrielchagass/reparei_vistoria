@@ -1,0 +1,22 @@
+# Dependencies (Composer)
+/vendor/
+/composer.phar
+
+# Environment / secrets
+.env
+.env.*.local
+
+# Logs and runtime artifacts
+*.log
+error_log
+public/**/error_log
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# Node artifacts (if ever used)
+node_modules/
