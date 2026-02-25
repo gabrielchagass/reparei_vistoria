@@ -3,6 +3,10 @@ session_start();
 $docRoot = isset($_SERVER['DOCUMENT_ROOT']) ? rtrim($_SERVER['DOCUMENT_ROOT'], '/\\') : null;
 $envVendor = getenv('COMPOSER_VENDOR_DIR');
 
+// Load environment variables from .env if present
+require_once __DIR__ . '/../env.php';
+loadEnv();
+
 $tries = [
     // Typical layout: repo/vendor beside public/
     __DIR__ . '/../vendor/autoload.php',

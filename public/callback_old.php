@@ -4,6 +4,9 @@ session_start();
 $docRoot = isset($_SERVER['DOCUMENT_ROOT']) ? rtrim($_SERVER['DOCUMENT_ROOT'], '/\\') : null;
 $envVendor = getenv('COMPOSER_VENDOR_DIR');
 
+require_once __DIR__ . '/../env.php';
+loadEnv();
+
 $tries = [
     __DIR__ . '/../vendor/autoload.php',
     __DIR__ . '/../../vendor/autoload.php',
