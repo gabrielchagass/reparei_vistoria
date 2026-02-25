@@ -15,7 +15,9 @@ if (!empty($_SERVER['CONTENT_LENGTH']) && $_SERVER['CONTENT_LENGTH'] !== '0') {
 $allowedParams = [
     'code', 'state', 'scope', 'authuser', 'prompt', 'session_state', 'hd',
     // error flow params from Google OAuth
-    'error', 'error_description', 'error_uri'
+    'error', 'error_description', 'error_uri',
+    // OpenID Connect issuer param sometimes present
+    'iss'
 ];
 foreach ($_GET as $key => $value) {
     if (!in_array($key, $allowedParams, true) || strlen($value) > 2048) {
