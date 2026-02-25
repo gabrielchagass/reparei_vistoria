@@ -12,7 +12,11 @@ if (!empty($_SERVER['CONTENT_LENGTH']) && $_SERVER['CONTENT_LENGTH'] !== '0') {
     exit('Corpo nao permitido.');
 }
 
-$allowedParams = ['code', 'state', 'scope', 'authuser', 'prompt', 'session_state', 'hd'];
+$allowedParams = [
+    'code', 'state', 'scope', 'authuser', 'prompt', 'session_state', 'hd',
+    // error flow params from Google OAuth
+    'error', 'error_description', 'error_uri'
+];
 foreach ($_GET as $key => $value) {
     if (!in_array($key, $allowedParams, true) || strlen($value) > 2048) {
         http_response_code(400);
