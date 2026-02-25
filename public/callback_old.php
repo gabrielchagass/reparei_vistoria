@@ -4,7 +4,7 @@ session_start();
 // Configurações do Google (use variáveis de ambiente; nunca commit secrets)
 $clientID = getenv('GOOGLE_CLIENT_ID');
 $clientSecret = getenv('GOOGLE_CLIENT_SECRET');
-$redirectURI = getenv('GOOGLE_REDIRECT_URI') ?: 'https://vistoria.reparei.com.br/solicitacao_vistoria/callback.php';
+$redirectURI = getenv('GOOGLE_REDIRECT_URI') ?: 'https://vistoria.reparei.com.br/callback.php';
 
 if (!$clientID || !$clientSecret) {
     http_response_code(500);

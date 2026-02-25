@@ -1,5 +1,5 @@
 <?php
-$url = 'https://vistoria.reparei.com.br/solicitacao_vistoria/devolus/WebHookRequest.php';
+$url = 'https://vistoria.reparei.com.br/devolus/WebHookRequest.php';
 
 $payload = '
 { "codigo": "acc7152e-507e-4430-94a0-3e89f6927b29", "evento": "VISTORIA_ENVIADA", "dados": { "id": 1458801, "data": "2023-07-06T19:39:04.743+00:00", "tipoVistoria": "Entrada", "codigoImovel": "1045-003\t", "idAgendamento": 1441377, "situacao": "NOVA" } }
@@ -42,7 +42,7 @@ $dados = '{
 }';
 
 // URL de destino para o envio via POST
-$urlDestino = 'https://vistoria.reparei.com.br/solicitacao_vistoria/devolus/WebHookRequest.php';
+$urlDestino = 'https://vistoria.reparei.com.br/devolus/WebHookRequest.php';
 
 // Inicializar a sessão curl
 $ch = curl_init();

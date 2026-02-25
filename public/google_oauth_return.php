@@ -41,7 +41,7 @@ require_once $autoload;
 
 $clientID = getenv('GOOGLE_CLIENT_ID');
 $clientSecret = getenv('GOOGLE_CLIENT_SECRET');
-$redirectURI = getenv('GOOGLE_REDIRECT_URI') ?: 'https://vistoria.reparei.com.br/solicitacao_vistoria/google_oauth_return.php';
+$redirectURI = getenv('GOOGLE_REDIRECT_URI') ?: 'https://vistoria.reparei.com.br/google_oauth_return.php';
 
 if (!$clientID || !$clientSecret) {
     http_response_code(500);
