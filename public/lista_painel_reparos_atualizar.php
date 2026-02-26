@@ -12,6 +12,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $agendamentoId = $dadosAgendamento['id'];
     $vistoriador = $dadosAgendamento['vistoriador'];
     $dataAgendamento = $dadosAgendamento['data_agendamento'];
+    // Normaliza data: aceita vazio (NULL) ou ISO e converte para MySQL
+    if (empty($dataAgendamento)) {
+      $dataAgendamentoSql = "NULL";
+    } else {
+      $dtObj = date_create($dataAgendamento);
+      $dataAgendamentoSql = $dtObj ? "'" . $dtObj->format('Y-m-d H:i:s') . "'" : "NULL";
+    }
 
     
     $termoassinado = $dadosAgendamento['termoassinado'];
@@ -20,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $descricaopendencias = $dadosAgendamento['descricaopendencias'];
 
     // Atualizar o agendamento no banco de dados
-    $sql = "UPDATE agendamentos SET vistoriador = '$vistoriador', data_agendamento = '$dataAgendamento', termoassinado = '$termoassinado', feitopadrao = '$feitopadrao', testesrealizados = '$testesrealizados', descricaopendencias = '$descricaopendencias' WHERE id = '$agendamentoId'";
+    $sql = "UPDATE agendamentos SET vistoriador = '$vistoriador', data_agendamento = $dataAgendamentoSql, termoassinado = '$termoassinado', feitopadrao = '$feitopadrao', testesrealizados = '$testesrealizados', descricaopendencias = '$descricaopendencias' WHERE id = '$agendamentoId'";
 
     if ($conn->query($sql) === TRUE) {
       // Envio da resposta de sucesso em formato JSON
