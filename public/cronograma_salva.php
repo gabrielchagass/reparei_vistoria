@@ -313,8 +313,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $ch_qtd_controle = $_POST["ch_qtd_controle"];
     
     $hoje=date('Y-m-d H:i:s');
-    // Trata nulos para colunas DATETIME que não aceitam string vazia
+    // Trata nulos para colunas DATETIME que nao aceitam string vazia
     $data_agendamento_sql = $data_agendamento ? "'" . $data_agendamento . "'" : "NULL";
+    // Trata whatsapp vazio para colunas numericas
+    $whatsapp_sql = ($whatsapp === '' || $whatsapp === null) ? "NULL" : "'" . $whatsapp . "'";
     $contrato_id=$SUPERLOGICA['id'];
     $aluguel_valor=$SUPERLOGICA['ALUGUEL'];
     $imovel_endereco=addslashes($SUPERLOGICA['ENDE']);
@@ -368,7 +370,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Preparar e executar a instrução SQL para inserir os dados no banco
     $sql = "INSERT INTO agendamentos (contrato_id, tipo_vistoria_id, contrato_cod, solicitante, imovel_disponivel, disponibilidade_motivo, data_agendamento, prazo_inicio, prazo_fim, prazo_dinamico, ch_local, padrao_vistoria, ch_qtd_cartao, ch_qtd_tag, ch_qtd_correio, ch_qtd_carrinho, devolus_agendamento_id, devolus_vistoria_id, solicitacao_bloqueada, ch_cod_chaveiro, termoassinado, feitopadrao, testesrealizados, created_at, aluguel_valor, imovel_endereco, imovel_numero, imovel_complemento, imovel_bairro, imovel_cidade, imovel_uf, imovel_tamanho_id, imovel_mobiliado, ch_qtd_controle, nome_cliente, whatsapp, obs_contato, ch_local_obs, descricaopendencias, imovel_area_construida)
-            VALUES ('$contrato_id', '$tipo_vistoria_id', '$contrato_cod', '$solicitante', '$imovel_disponivel', '$disponibilidade_motivo', $data_agendamento_sql, '$prazo_inicio', '$horarioConclusao', '$prazo_dinamico', '$ch_local', '$padrao_vistoria', '$ch_qtd_cartao', '$ch_qtd_tag', '$ch_qtd_correio', '$ch_qtd_carrinho', '$devolus_agendamento_id', '$devolus_vistoria_id', '$solicitacao_bloqueada', '$ch_cod_chaveiro', '$termoassinado', '$feitopadrao', '$testesrealizados', '$hoje', '$aluguel_valor', '$imovel_endereco', '$imovel_numero', '$imovel_complemento', '$imovel_bairro', '$imovel_cidade', '$imovel_uf', '$imovel_tamanho_id', '$imovel_mobiliado', '$ch_qtd_controle', '$nome_cliente', '$whatsapp', '$obs_contato', '$ch_local_obs', '$descricaopendencias', '$area_construida')";
+            VALUES ('$contrato_id', '$tipo_vistoria_id', '$contrato_cod', '$solicitante', '$imovel_disponivel', '$disponibilidade_motivo', $data_agendamento_sql, '$prazo_inicio', '$horarioConclusao', '$prazo_dinamico', '$ch_local', '$padrao_vistoria', '$ch_qtd_cartao', '$ch_qtd_tag', '$ch_qtd_correio', '$ch_qtd_carrinho', '$devolus_agendamento_id', '$devolus_vistoria_id', '$solicitacao_bloqueada', '$ch_cod_chaveiro', '$termoassinado', '$feitopadrao', '$testesrealizados', '$hoje', '$aluguel_valor', '$imovel_endereco', '$imovel_numero', '$imovel_complemento', '$imovel_bairro', '$imovel_cidade', '$imovel_uf', '$imovel_tamanho_id', '$imovel_mobiliado', '$ch_qtd_controle', '$nome_cliente', $whatsapp_sql, '$obs_contato', '$ch_local_obs', '$descricaopendencias', '$area_construida')";
 
 
     if ($conn->query($sql) === TRUE) {
