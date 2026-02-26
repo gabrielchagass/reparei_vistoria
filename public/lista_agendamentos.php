@@ -431,7 +431,9 @@ include('buscar_proximo_da_fila.php');
                 echo '<td id="id_'.$row['id'].'" class="id'.$row['id'].'">'.$row['id'].'</td>';
                 echo '<td id="cod_'.$row['id'].'">' . $row['contrato_cod'] . '</td>';
                 echo '<td id="logra_'.$row['id'].'">' . $row['imovel_endereco'] . ', '. $row['imovel_numero'].' '.$row['imovel_complemento'].' </td>';
-                echo '<td>@' . array_shift(explode('@',$row['solicitante'])). '</td>';
+                $parts = explode('@', $row['solicitante']);
+                $sol_user = array_shift($parts);
+                echo '<td>@' . $sol_user . '</td>';
                 echo '<td id="dr_'.$row['id'].'" class="data" '.$dragable.'\>'.$proxima_txt.'<a href="#" class="content_data '.$class_edit_link.'" data-id="' . $row['id'] . '" id="dtval_'.$row['id'].'">' . $displayprazo.'</a></td>
                     <td>
                         '.$cancel_button.'
