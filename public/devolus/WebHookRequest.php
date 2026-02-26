@@ -48,7 +48,7 @@ if ($payload === false) {
         $vistoria = new Vistoria($codigoImovel, $idAgendamento, $idVistoria);
         $resultado_id = $vistoria->concluir($dataVistoria);
         
-        if($resultado!=false){
+        if($resultado_id!==false){
             http_response_code(200);
             header('Content-Type: application/json');
             echo json_encode(array('message' => 'Requisição bem-sucedida'));
