@@ -322,6 +322,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $imovel_cidade=addslashes($SUPERLOGICA['MUNICIPIO']);
     $imovel_uf=addslashes($SUPERLOGICA['UF']);
     $area_construida=$SUPERLOGICA['area_construida'];
+    if(isset($_POST["descricaopendencias"])){
+        $descricaopendencias = addslashes($_POST["descricaopendencias"]);
+    }else{
+        $descricaopendencias = '';
+    }
 
     //verifica se imóvel já esta cadastrado
     $sql = "SELECT * FROM agendamentos WHERE contrato_id = $contrato_id AND tipo_vistoria_id = $tipo_vistoria_id AND deleted_at is NULL AND (data_fim is NULL OR data_fim  > CURDATE() )";
@@ -352,8 +357,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Preparar e executar a instrução SQL para inserir os dados no banco
-    $sql = "INSERT INTO agendamentos (contrato_id, tipo_vistoria_id, contrato_cod, solicitante, imovel_disponivel, disponibilidade_motivo, data_agendamento, prazo_inicio, prazo_fim, prazo_dinamico, ch_local, padrao_vistoria, ch_qtd_cartao, ch_qtd_tag, ch_qtd_correio, ch_qtd_carrinho, created_at, aluguel_valor, imovel_endereco, imovel_numero, imovel_complemento, imovel_bairro, imovel_cidade, imovel_uf, imovel_tamanho_id, imovel_mobiliado, ch_qtd_controle, nome_cliente, whatsapp, obs_contato, ch_local_obs, imovel_area_construida)
-            VALUES ('$contrato_id', '$tipo_vistoria_id', '$contrato_cod', '$solicitante', '$imovel_disponivel', '$disponibilidade_motivo', '$data_agendamento', '$prazo_inicio', '$horarioConclusao', '$prazo_dinamico', '$ch_local', '$padrao_vistoria', '$ch_qtd_cartao', '$ch_qtd_tag', '$ch_qtd_correio', '$ch_qtd_carrinho', '$hoje', '$aluguel_valor', '$imovel_endereco', '$imovel_numero', '$imovel_complemento', '$imovel_bairro', '$imovel_cidade', '$imovel_uf', '$imovel_tamanho_id', '$imovel_mobiliado', '$ch_qtd_controle', '$nome_cliente', '$whatsapp', '$obs_contato', '$ch_local_obs', '$area_construida')";
+    $sql = "INSERT INTO agendamentos (contrato_id, tipo_vistoria_id, contrato_cod, solicitante, imovel_disponivel, disponibilidade_motivo, data_agendamento, prazo_inicio, prazo_fim, prazo_dinamico, ch_local, padrao_vistoria, ch_qtd_cartao, ch_qtd_tag, ch_qtd_correio, ch_qtd_carrinho, created_at, aluguel_valor, imovel_endereco, imovel_numero, imovel_complemento, imovel_bairro, imovel_cidade, imovel_uf, imovel_tamanho_id, imovel_mobiliado, ch_qtd_controle, nome_cliente, whatsapp, obs_contato, ch_local_obs, descricaopendencias, imovel_area_construida)
+            VALUES ('$contrato_id', '$tipo_vistoria_id', '$contrato_cod', '$solicitante', '$imovel_disponivel', '$disponibilidade_motivo', '$data_agendamento', '$prazo_inicio', '$horarioConclusao', '$prazo_dinamico', '$ch_local', '$padrao_vistoria', '$ch_qtd_cartao', '$ch_qtd_tag', '$ch_qtd_correio', '$ch_qtd_carrinho', '$hoje', '$aluguel_valor', '$imovel_endereco', '$imovel_numero', '$imovel_complemento', '$imovel_bairro', '$imovel_cidade', '$imovel_uf', '$imovel_tamanho_id', '$imovel_mobiliado', '$ch_qtd_controle', '$nome_cliente', '$whatsapp', '$obs_contato', '$ch_local_obs', '$descricaopendencias', '$area_construida')";
 
 
     if ($conn->query($sql) === TRUE) {
