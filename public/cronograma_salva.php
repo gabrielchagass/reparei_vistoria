@@ -315,8 +315,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $hoje=date('Y-m-d H:i:s');
     // Trata nulos para colunas DATETIME que nao aceitam string vazia
     $data_agendamento_sql = $data_agendamento ? "'" . $data_agendamento . "'" : "NULL";
-    // Trata whatsapp vazio para colunas numericas
-    $whatsapp_sql = ($whatsapp === '' || $whatsapp === null) ? "NULL" : "'" . $whatsapp . "'";
+    // Trata whatsapp vazio para colunas numericas (usa 0)
+    $whatsapp = preg_replace('/\D/', '', $whatsapp);
+    if($whatsapp === '' || $whatsapp === null){
+        $whatsapp_sql = 0;
+    }else{
+        $whatsapp_sql = (int)$whatsapp;
+    }
     $contrato_id=$SUPERLOGICA['id'];
     $aluguel_valor=$SUPERLOGICA['ALUGUEL'];
     $imovel_endereco=addslashes($SUPERLOGICA['ENDE']);
