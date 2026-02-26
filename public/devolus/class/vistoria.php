@@ -13,6 +13,9 @@ class vistoria{
     public function concluir($data) {
         include_once('con_v.php');
 
+        // Normaliza data ISO (ex: 2026-02-26T12:09:28.879+00:00) para formato MySQL
+        $dataObj = date_create($data);
+        $dataMysql = $dataObj ? $dataObj->format('Y-m-d H:i:s') : null;
 
         // Consulta SQL para selecionar os registros da tabela "agendamentos" com data_fim nulo
         $sql = "SELECT * FROM agendamentos WHERE devolus_agendamento_id = ".$this->id_agendamento." AND status_id < 4 AND data_fim IS NULL ORDER BY id DESC LIMIT 1";
@@ -30,7 +33,7 @@ class vistoria{
             
 
             // Preparar o comando SQL
-            $sql = "UPDATE agendamentos SET status_id = 4, devolus_vistoria_id = ".$this->id_vistoria.", data_fim = '$data' WHERE id = $AgendamentoId";
+            $sql = "UPDATE agendamentos SET status_id = 4, devolus_vistoria_id = ".$this->id_vistoria.", data_fim = ".($dataMysql ? "'$dataMysql'" : "NULL")." WHERE id = $AgendamentoId";
             // Executar o comando SQL
             if ($conn->query($sql) === TRUE) {
                 //echo "Atualização realizada com sucesso!";
@@ -44,7 +47,6 @@ class vistoria{
             //nada encontrado
             return true;
         }
-
 
 
 
