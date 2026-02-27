@@ -82,7 +82,8 @@ $data_fim_fim=date('Y-m-d H:i:s', mktime(23,59,59,date('m')-$m_ant,(1-1),date('Y
           $VISTORIADORES['']='';
           $result = $conn->query($sql);
             while ($agendamento = $result->fetch_assoc()) {
-                $VISTORIADORES[$agendamento['id']]=array_shift(explode('@',$agendamento['email']));
+                $parts = explode('@', $agendamento['email']);
+                $VISTORIADORES[$agendamento['id']] = array_shift($parts);
             }         
 
             $contagem=array();

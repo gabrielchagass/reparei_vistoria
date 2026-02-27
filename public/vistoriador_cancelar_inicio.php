@@ -42,7 +42,7 @@ $sqlUpdate = "UPDATE agendamentos SET devolus_agendamento_id = NULL, vistoriador
 $resultUpdate = $conn->query($sqlUpdate);
 
 //cadastra vistoria iniciada
-$sqlUpdate = "UPDATE cargos SET agendamento_id = NULL WHERE agendamento_id = $vistoria_id";
+$sqlUpdate = "UPDATE cargos SET agendamento_id = 0 WHERE agendamento_id = $vistoria_id";
 $resultUpdate = $conn->query($sqlUpdate);
 
 // URL de destino para o redirecionamento

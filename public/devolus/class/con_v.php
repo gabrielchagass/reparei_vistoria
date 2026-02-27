@@ -43,4 +43,6 @@ if ($conn->connect_error) {
 }
 
 $conn->set_charset('utf8mb4');
+// Mantém sessão MySQL em UTC-3 (São Paulo) para alinhar horários com PHP
+$conn->query("SET time_zone = '-03:00'");
 ?>

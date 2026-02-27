@@ -66,7 +66,8 @@ $html_linhas='';
           $VISTORIADORES['']='';
           $result = $conn->query($sql);
             while ($agendamento = $result->fetch_assoc()) {
-                $VISTORIADORES[$agendamento['id']]=array_shift(explode('@',$agendamento['email']));
+                $parts = explode('@', $agendamento['email']);
+                $VISTORIADORES[$agendamento['id']] = array_shift($parts);
             }         
 
             $mes_atras=date('Y-m-d H:i:s', mktime(0,0,0,date('m'),(date('d')-30),date('Y')));

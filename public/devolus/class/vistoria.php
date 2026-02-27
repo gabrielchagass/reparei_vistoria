@@ -27,7 +27,8 @@ class vistoria{
                 $DevolusAgendamentoId=$row['devolus_agendamento_id'];
                 
                 //libera vistoriador
-                $sqlx = "UPDATE cargos SET agendamento_id = null WHERE agendamento_id = $AgendamentoId";
+                // Coluna agendamento_id Ã© NOT NULL no banco; use 0 como "sem agendamento" para evitar erro
+                $sqlx = "UPDATE cargos SET agendamento_id = 0 WHERE agendamento_id = $AgendamentoId";
                 $conn->query($sqlx);
             }
             

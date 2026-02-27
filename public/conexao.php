@@ -1,4 +1,5 @@
 <?php
+// Horário de São Paulo (UTC-3) para toda a aplicação e sessão MySQL
 date_default_timezone_set('America/Sao_Paulo');
 require_once 'g_ver_login.php';
 
@@ -32,6 +33,9 @@ $conn->select_db($dbname);
 
 // Garante charset correto para evitar caracteres corrompidos
 $conn->set_charset('utf8mb4');
+
+// Ajusta timezone da sessão MySQL para acompanhar o PHP
+$conn->query("SET time_zone = '-03:00'");
 
 // Restante do código...
 ?>

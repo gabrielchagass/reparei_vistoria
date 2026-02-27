@@ -415,7 +415,7 @@ $TIPO_VISTORIA=array('','Entrada','Saida','Fotos');
             <table>
               <tr>
                 <td>solicitante:</td>
-                <td>@' . array_shift(explode('@',$agendamento['solicitante'])). '</td>
+                <td>@' . (function($s){ $parts = explode('@',$s); return array_shift($parts); })($agendamento['solicitante']) . '</td>
               </tr>
               <tr>
                 <td>Documento:</td>

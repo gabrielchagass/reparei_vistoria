@@ -361,7 +361,9 @@ include('buscar_proximo_da_fila.php');
                         echo '<td>'.$row['id'].'</td>';
                         echo '<td>' . $row['contrato_cod'] . '</td>';
                         echo '<td>' . $row['imovel_endereco'] . ', '. $row['imovel_numero'].' '.$row['imovel_complemento'].' </td>';
-                        echo '<td>@' . array_shift(explode('@',$row['solicitante'])). '</td>';
+                        $solParts = explode('@', $row['solicitante']);
+                        $solicitanteNome = array_shift($solParts);
+                        echo '<td>@' . $solicitanteNome . '</td>';
                         echo '<td>A partir de ' . $displayprazo.'</td>
                             <td>
                                 '.$cancel_button.'
