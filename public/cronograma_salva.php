@@ -290,17 +290,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     
     
-    $ch_local = $_POST["ch_local"];
+    // Campos opcionais do formulário (evita warnings quando não enviados)
+    $ch_local = isset($_POST["ch_local"]) ? $_POST["ch_local"] : '';
     if(isset($_POST["ch_local_obs"])){
         $ch_local_obs = addslashes($_POST["ch_local_obs"]);
     }else{
         $ch_local_obs = '';
     }
-    $padrao_vistoria = $_POST["padrao_vistoria"];
-    $ch_qtd_cartao = $_POST["ch_qtd_cartao"];
-    $ch_qtd_tag = $_POST["ch_qtd_tag"];
-    $ch_qtd_correio = $_POST["ch_qtd_correio"];
-    $ch_qtd_carrinho = $_POST["ch_qtd_carrinho"];
+    $padrao_vistoria = isset($_POST["padrao_vistoria"]) ? $_POST["padrao_vistoria"] : '';
+    $ch_qtd_cartao = isset($_POST["ch_qtd_cartao"]) ? (int)$_POST["ch_qtd_cartao"] : 0;
+    $ch_qtd_tag = isset($_POST["ch_qtd_tag"]) ? (int)$_POST["ch_qtd_tag"] : 0;
+    $ch_qtd_correio = isset($_POST["ch_qtd_correio"]) ? (int)$_POST["ch_qtd_correio"] : 0;
+    $ch_qtd_carrinho = isset($_POST["ch_qtd_carrinho"]) ? (int)$_POST["ch_qtd_carrinho"] : 0;
     if($SUPERLOGICA['area_construida']>105){
         $imovel_tamanho_id = 3;
     }else if($SUPERLOGICA['area_construida']>65){
@@ -309,8 +310,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $imovel_tamanho_id = 1;
     }
 
-    $imovel_mobiliado = $_POST["imovel_mobiliado"];
-    $ch_qtd_controle = $_POST["ch_qtd_controle"];
+    $imovel_mobiliado = isset($_POST["imovel_mobiliado"]) ? $_POST["imovel_mobiliado"] : 0;
+    $ch_qtd_controle = isset($_POST["ch_qtd_controle"]) ? (int)$_POST["ch_qtd_controle"] : 0;
     
     $hoje=date('Y-m-d H:i:s');
     // Trata nulos para colunas DATETIME que nao aceitam string vazia
@@ -326,7 +327,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $aluguel_valor=$SUPERLOGICA['ALUGUEL'];
     $imovel_endereco=addslashes($SUPERLOGICA['ENDE']);
     $imovel_numero=addslashes($SUPERLOGICA['nume']);
-    $imovel_complemento=addslashes($SUPERLOGICA['comp']);
+    // coluna imovel_complemento aceita no máximo 100 caracteres
+    $imovel_complemento_raw = isset($SUPERLOGICA['comp']) ? $SUPERLOGICA['comp'] : '';
+    $imovel_complemento=addslashes(substr($imovel_complemento_raw, 0, 100));
     $imovel_bairro=addslashes($SUPERLOGICA['BAI']);
     $imovel_cidade=addslashes($SUPERLOGICA['MUNICIPIO']);
     $imovel_uf=addslashes($SUPERLOGICA['UF']);
