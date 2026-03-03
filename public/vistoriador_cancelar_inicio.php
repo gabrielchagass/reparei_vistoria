@@ -38,7 +38,8 @@ $devolus->cancelarAgendamento($agendamento['devolus_agendamento_id']);
 //$devolus->setTipoVistoria_id($agendamento['tipo_vistoria_id']);
 
 //echo "UPDATE agendamentos SET devolus_agendamento_id = '".$novoAgendamento['id']."', vistoriador = '".$user_id."' WHERE id = $vistoria_id";
-$sqlUpdate = "UPDATE agendamentos SET devolus_agendamento_id = NULL, vistoriador = NULL WHERE id = $vistoria_id";
+// Coluna devolus_agendamento_id nÃ£o permite NULL no banco; usa 0 para sinalizar cancelamento.
+$sqlUpdate = "UPDATE agendamentos SET devolus_agendamento_id = 0, vistoriador = NULL WHERE id = $vistoria_id";
 $resultUpdate = $conn->query($sqlUpdate);
 
 //cadastra vistoria iniciada
