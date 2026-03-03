@@ -73,10 +73,10 @@ $solicitante=$email;
 
         $dt_comp=explode('/',$data_inicio_contrato);
             $dt_comp=array_reverse($dt_comp);
-            $dt_comp=implode($dt_comp)+0;
-            $dt_comp_b=date('Ymd')-30;
-        $dt_comp_b=date('Ymd')-30;
-        $dt_comp_c=date('Ymd')-2;
+        // converte para inteiro YYYYMMDD sem arriscar soma com string nÃ£o numÃ©rica
+        $dt_comp = intval(implode($dt_comp));
+        $dt_comp_b = intval(date('Ymd')) - 30;
+        $dt_comp_c = intval(date('Ymd')) - 2;
         if($dt_comp_b>$dt_comp and (!isset($_POST["tipo_vistoria_id"]) or $_POST["tipo_vistoria_id"]==1)){
             //print_r($dados['data'][0]);
             die('ERRO #3: Codigo inválido ou data de contrato incorreta. Encontrado um contrato com inicio em: '.$data_inicio_contrato);
@@ -244,8 +244,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             $prazo_inicio = $prazo_inicio_post->format('Y-m-d');
     
-            $dtcomp_ini=$prazo_inicio_post->format('Ymd')+0;
-            $hjcomp=date('Ymd')+0;
+            $dtcomp_ini = intval($prazo_inicio_post->format('Ymd'));
+            $hjcomp = intval(date('Ymd'));
             if($dtcomp_ini<=$hjcomp){
                 $prazo_inicio =date('Y-m-d H:i:s');
             }else{
@@ -264,7 +264,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $obs_contato='';
     }else{
         //vistoria de saida
-        $tipo_vistoria_id = $_POST["tipo_vistoria_id"]+0;
+        $tipo_vistoria_id = intval($_POST["tipo_vistoria_id"]);
         $imovel_disponivel = 1;
         $disponibilidade_motivo = '';
         
@@ -285,7 +285,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         //die($horarioConclusao);
         //contatos
         $nome_cliente= addslashes($_POST["nome_cliente"]); 
-        $whatsapp= addslashes(preg_replace('/\D/', '', $_POST["whatsapp"]))+0; 
+        // remove caracteres nÃ£o numÃ©ricos; evita TypeError ao somar com int
+        $whatsapp = preg_replace('/\\D/', '', $_POST["whatsapp"]); 
         $obs_contato= addslashes($_POST["obs_contato"]); 
     }
     
